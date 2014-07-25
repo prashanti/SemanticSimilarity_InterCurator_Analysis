@@ -34,16 +34,7 @@ class DLQueryEngine {
         parser = new DLQueryParser(rootOntology, shortFormProvider);
     }
 
-    /** Gets the superclasses of a class expression parsed from a string.
-     * 
-     * @param classExpressionString
-     *            The string from which the class expression will be parsed.
-     * @param direct
-     *            Specifies whether direct superclasses should be returned or
-     *            not.
-     * @return The superclasses of the specified class expression
-     * @throws ParserException
-     *             If there was a problem parsing the class expression. */
+
     public String getSuperClasses(String classExpressionString, boolean direct)
             throws ParserException {
         if (classExpressionString.trim().length() == 0) {
@@ -67,15 +58,6 @@ class DLQueryParser {
     private OWLOntology rootOntology;
     private BidirectionalShortFormProvider bidiShortFormProvider;
 
-    /** Constructs a DLQueryParser using the specified ontology and short form
-     * provider to map entity IRIs to short names.
-     * 
-     * @param rootOntology
-     *            The root ontology. This essentially provides the domain
-     *            vocabulary for the query.
-     * @param shortFormProvider
-     *            A short form provider to be used for mapping back and forth
-     *            between entities and their short names (renderings). */
     public DLQueryParser(OWLOntology rootOntology, ShortFormProvider shortFormProvider) {
         this.rootOntology = rootOntology;
         OWLOntologyManager manager = rootOntology.getOWLOntologyManager();
@@ -87,14 +69,7 @@ class DLQueryParser {
                 importsClosure, shortFormProvider);
     }
 
-    /** Parses a class expression string to obtain a class expression.
-     * 
-     * @param classExpressionString
-     *            The class expression string
-     * @return The corresponding class expression
-     * @throws ParserException
-     *             if the class expression string is malformed or contains
-     *             unknown entity names. */
+
     public OWLClassExpression parseClassExpression(String classExpressionString)
             throws ParserException {
         OWLDataFactory dataFactory = rootOntology.getOWLOntologyManager()
@@ -121,9 +96,7 @@ class DLQueryPrinter {
         dlQueryEngine = engine;
     }
 
-    /** @param classExpression
-     *            the class expression to use for interrogation 
-     * @throws ParserException */
+
     public String askQuery(String classExpression) throws ParserException {
         
       

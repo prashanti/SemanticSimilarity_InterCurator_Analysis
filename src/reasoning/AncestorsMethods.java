@@ -1,6 +1,8 @@
 package reasoning;
 
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import org.semanticweb.owlapi.expression.ParserException;
@@ -8,7 +10,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
-
+import reasoning.DLQueryPrinter;
 public class AncestorsMethods {
 	
 	public String getancestors(OWLClass clsA, OWLReasoner reasoner) throws OWLOntologyCreationException
@@ -39,17 +41,23 @@ public class AncestorsMethods {
 	}
 		    return(ancestors1);
 	}
-    public String getExpression(String E1, String Q1, String E2)
+	
+    public String getExpression(String E1, String Q1, String E2, List propertylist)
     {
-    
     	if (E1 != null && E1.equals("Entity ID"))
     	{
     		return (null);
     	}
+    	
     	String expression=null;
-    	if (Q1 != null && Q1.trim().length()!=0)
+    	//if (Q1.trim() != null && Q1.trim().length()!=0)
+    	
+    	if (Q1!=null)
     	{
-    		expression = Q1; 
+    		if (!Q1.trim().contains("null") && Q1.trim().length()!=0)
+    		{
+    		expression = Q1;
+    		}
     	}
     	
     	
@@ -57,7 +65,16 @@ public class AncestorsMethods {
     	{
     		if (expression != null)
     		{
+    			System.out.println(expression);
+    			System.out.println(propertylist);
+    			if(propertylist.contains(expression.trim()))
+    			{
+    				expression=expression+" some (inheres_in some ("+E1+"))";
+    			}
+    			else
+    			{
     			expression=expression+" and inheres_in some ("+E1+")";
+    			}
     		}
     		else
     		{
